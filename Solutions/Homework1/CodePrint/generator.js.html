@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>generator.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+generator.js</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">var </span><span class="s1">sequencePNames = [</span><span class="s2">'p1'</span><span class="s1">, </span><span class="s2">'p2'</span><span class="s1">, </span><span class="s2">'p3'</span><span class="s1">], 
+    sequenceRNames = [</span><span class="s2">'r1'</span><span class="s1">, </span><span class="s2">'r2'</span><span class="s1">, </span><span class="s2">'r3'</span><span class="s1">], 
+ 
+    sequenceCommands = { 
+        p1: </span><span class="s2">'x=1'</span><span class="s1">,  
+        p2: </span><span class="s2">'y=2'</span><span class="s1">,  
+        p3: </span><span class="s2">'z=1'</span><span class="s1">, 
+        r1: </span><span class="s2">'x=y-z'</span><span class="s1">,  
+        r2: </span><span class="s2">'y=x'</span><span class="s1">,  
+        r3: </span><span class="s2">'z=x+y'</span><span class="s1"> 
+    }, 
+    generatedSequences = []; 
+ 
+</span><span class="s0">function </span><span class="s1">genFurtherSequences(seqA, seqB, sequenceArray) { 
+ 
+    </span><span class="s3">// already picked all possible execution paths, this is a execution path bottom</span><span class="s1"> 
+    </span><span class="s0">if </span><span class="s1">(seqA.length === </span><span class="s4">0 </span><span class="s1">&amp;&amp; seqB.length === </span><span class="s4">0</span><span class="s1">) { 
+ 
+        generatedSequences.push(sequenceArray); 
+    } 
+ 
+    </span><span class="s0">if</span><span class="s1">(seqA.length) { 
+ 
+        </span><span class="s3">/*  
+            Another execution sequence possibility, if A is executed this time and not B 
+ 
+            Chase down this possibility by creating a new scope for this case  
+            (cloning both sequenceA and sequenceArray to pass the new variants to the recursion 
+            while keeping the values intact for the other cases (when B is executed first)) 
+        */</span><span class="s1"> 
+ 
+        </span><span class="s0">var </span><span class="s1">clonedSeqA = seqA.slice(</span><span class="s4">0</span><span class="s1">), 
+            command = clonedSeqA.pop(), 
+            sequenceArrayCopy = sequenceArray.slice(</span><span class="s4">0</span><span class="s1">); 
+         
+        sequenceArrayCopy.push(command); 
+        genFurtherSequences(clonedSeqA, seqB, sequenceArrayCopy); 
+    } 
+ 
+    </span><span class="s0">if</span><span class="s1">(seqB.length) { 
+ 
+        </span><span class="s0">var </span><span class="s1">clonedSeqB = seqB.slice(</span><span class="s4">0</span><span class="s1">), 
+            command = clonedSeqB.pop(), 
+            sequenceArrayCopy = sequenceArray.slice(</span><span class="s4">0</span><span class="s1">); 
+         
+        sequenceArrayCopy.push(command); 
+        genFurtherSequences(seqA, clonedSeqB, sequenceArrayCopy); 
+    } 
+} 
+ 
+</span><span class="s0">function </span><span class="s1">printSequence(executionSequence, seqCommands) { 
+ 
+    </span><span class="s3">/* 
+        Initialize values as said in the exercise and execute current sequence. 
+        Then print the case on a new line 
+    */</span><span class="s1"> 
+ 
+    </span><span class="s0">var </span><span class="s1">x = </span><span class="s4">0</span><span class="s1">, 
+        y = </span><span class="s4">0</span><span class="s1">, 
+        z = </span><span class="s4">0</span><span class="s1">; 
+ 
+    executionSequence.forEach(</span><span class="s0">function </span><span class="s1">(command) { 
+ 
+        eval(seqCommands[command]); 
+    }); 
+ 
+    console.log(</span><span class="s2">`</span><span class="s1">${executionSequence.join(</span><span class="s2">' -&gt; '</span><span class="s1">)}</span><span class="s2"> -&gt; (x = </span><span class="s1">${x}</span><span class="s2">, y = </span><span class="s1">${y}</span><span class="s2">, z=</span><span class="s1">${z}</span><span class="s2">)`</span><span class="s1">); 
+} 
+ 
+genFurtherSequences(sequencePNames.reverse(), sequenceRNames.reverse(), []); 
+generatedSequences.forEach(</span><span class="s0">function </span><span class="s1">(sequence) { 
+ 
+    printSequence(sequence, sequenceCommands); 
+});</span></pre>
+</body>
+</html>
