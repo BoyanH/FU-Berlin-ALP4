@@ -1,0 +1,40 @@
+\input{src/header}											% bindet Header ein (WICHTIG)
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\dozent}{Prof. Dr. Margarita Esponda}					% <-- Names des Dozenten eintragen
+\newcommand{\tutor}{Lilli Walter}						% <-- Name eurer Tutoriun eintragen
+\newcommand{\tutoriumNo}{6}				% <-- Nummer im KVV nachschauen
+\newcommand{\projectNo}{5}									% <-- Nummer des Übungszettels
+\newcommand{\veranstaltung}{Nichtsequentielle Programmierung}	% <-- Name der Lehrveranstaltung eintragen
+\newcommand{\semester}{SoeSe 2017}						% <-- z.B. SoSo 17, WiSe 17/18
+\newcommand{\studenten}{Boyan Hristov, Sergelen Gongor}			% <-- Hier eure Namen eintragen
+% /////////////////////// BEGIN DOKUMENT /////////////////////////
+
+
+\begin{document}
+\input{src/titlepage}										% erstellt die Titelseite
+
+
+Link zum Git Repository: \url{https://github.com/BoyanH/FU-Berlin-ALP4/tree/master/Solutions/Homework5}
+
+% /////////////////////// Aufgabe 1 /////////////////////////
+
+\section*{Aufgabe 1}
+
+
+\section*{Aufgabe 2}
+
+\begin{enumerate}
+
+\item[n=4, k=2]
+
+Die erste zwei Threads laufen bis $p_8$ nach einander. D.h. $ count=0 \land D = 0$. Dan laufen zwei weitere Threads nach einander bis $p_7$. D.h. $count=-2$ und die letzte beide Threads warten auf D. Danach laufen die erste zwei Threads bis $p_1$. Das erste Thread setzt $count = count + 1 = -2 + 1 = =-1$ und released deswegen D. Dann wird das 2 Thread, das sich im CS befindet bis $p_1$ ausgeführt, setzt dabei $count = count+1 = -1 + 1 = 0 \leq 0 \Rightarrow$ released D wieder. Damit haben wir $D=2$ erreicht, ein unerlaubtes Zustand. 
+
+\item[n=3, k=2]
+
+\end{enumerate}
+
+% /////////////////////// END DOKUMENT /////////////////////////
+\end{document}
